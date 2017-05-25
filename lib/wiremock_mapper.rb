@@ -26,7 +26,6 @@ module WireMockMapper
     private
 
     WIREMOCK_MAPPINGS_PATH = '__admin/mappings'.freeze
-    WIREMOCK_NEW_MAPPING_PATH = "#{WIREMOCK_MAPPINGS_PATH}/new".freeze
 
     def deep_clone(object)
       Marshal.load(Marshal.dump(object))
@@ -52,7 +51,7 @@ module WireMockMapper
     end
 
     def send_to_wiremock(url, body)
-      uri = URI([url, WIREMOCK_NEW_MAPPING_PATH].join('/'))
+      uri = URI([url, WIREMOCK_MAPPINGS_PATH].join('/'))
       http = Net::HTTP.new(uri.host, uri.port)
       request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
       request.body = body.to_json
